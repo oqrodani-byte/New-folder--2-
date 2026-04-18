@@ -1,3 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
+export class Api {
+  private http = inject(HttpClient);
+
+ 
+  baseUrl = ''; 
+
+  
+  getData(url: string) {
+    return this.http.get(this.baseUrl + url);
+  }
+
+ 
+  postData(url: string, body: any) {
+    return this.http.post(this.baseUrl + url, body);
+  }
+}

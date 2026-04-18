@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -9,13 +10,19 @@ export const routes: Routes = [
   },
   {
     path : "home",
-    // component : Home
+    
     loadComponent : () => import('./home/home').then(m => m.Home)
 
   },
   {
     path : "details",
-    loadComponent : () => import('./details/details').then(m => m.Details)
+    loadComponent : () => import('./details/details').then(m => m.Details),
+    canActivate : [authGuard]
+
+  },
+    {
+    path : "login",
+    loadComponent : () => import('./login/login').then(m => m.Login)
 
   },
   {
@@ -28,5 +35,3 @@ export const routes: Routes = [
 
 
 
-// eager routing 
-// lazy loading 

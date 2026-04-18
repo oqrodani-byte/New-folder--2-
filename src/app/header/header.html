@@ -1,2 +1,11 @@
 
 
+<nav class="navbar" >
+  <input (keydown)="onKeyDown($event)" />
+  <ul>
+    <li><a routerLink="/home"    routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/details" routerLinkActive="active">Details</a></li>
+        <li><a routerLink="/login" routerLinkActive="active">Log In</a></li>
+    <!-- <li><a routerLink=""></a></li> -->
+  </ul>
+</nav>

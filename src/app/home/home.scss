@@ -1,0 +1,282 @@
+// --- 1. CORE VARIABLES & MIXINS ---
+$p-color: #FF5A5F;
+$s-color: #00A699;
+$accent: #FFB400;
+$dark: #1A1A1A;
+$text: #484848;
+$light-bg: #FDFDFD;
+$white: #FFFFFF;
+$cubic: cubic-bezier(0.23, 1, 0.32, 1);
+$shadow-xl: 0 30px 60px rgba(0,0,0,0.12);
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin transition($prop: all) {
+  transition: $prop 0.4s $cubic;
+}
+
+// --- 2. GLOBAL STYLES ---
+.app-container {
+  background: $light-bg;
+  color: $text;
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+// Mesh Background
+.mesh-gradient {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100vh;
+  background: 
+    radial-gradient(at 0% 0%, rgba($p-color, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba($s-color, 0.05) 0px, transparent 50%);
+  z-index: 0;
+}
+
+// --- 3. NAVIGATION ---
+
+
+
+// --- 4. HERO SECTION ---
+.hero-v2 {
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    @media (max-width: 992px) { grid-template-columns: 1fr; }
+  }
+
+  .tagline {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 800;
+    color: $p-color;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .main-headline {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 30px;
+    color: $dark;
+    .gradient-text {
+      background: linear-gradient(90deg, $p-color, #FF8A00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @media (max-width: 600px) { font-size: 3.5rem; }
+  }
+
+  .description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #666;
+    max-width: 580px;
+    margin-bottom: 45px;
+  }
+}
+
+// Hero Search Form
+.hero-form {
+  display: flex;
+  background: $white;
+  padding: 10px;
+  border-radius: 100px;
+  box-shadow: $shadow-xl;
+  max-width: 500px;
+  margin-bottom: 50px;
+
+  .input-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    input { border: none; outline: none; width: 100%; font-size: 1rem; }
+    .loc-icon { margin-right: 10px; }
+  }
+
+  .search-submit {
+    background: $dark;
+    color: $white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 100px;
+    font-weight: 700;
+    cursor: pointer;
+    @include transition;
+    &:hover { background: $p-color; }
+  }
+}
+
+// Hero Visuals
+.hero-visual {
+  position: relative;
+  .visual-wrapper {
+    position: relative;
+    @include flex-center;
+  }
+  
+  .circle-rotating {
+    position: absolute;
+    width: 110%; height: 110%;
+    border: 1px dashed rgba($p-color, 0.2);
+    border-radius: 50%;
+    animation: rotate 20s linear infinite;
+  }
+
+  .floating-dish {
+    width: 100%;
+    max-width: 500px;
+    filter: drop-shadow(0 40px 60px rgba(0,0,0,0.15));
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+.accent-card {
+  position: absolute;
+  background: rgba($white, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px 25px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  
+  &.info-top { top: 10%; right: -20px; }
+  &.info-bottom { bottom: 15%; left: -20px; }
+  
+  .icon-pulse {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba($p-color, 0.1);
+    color: $p-color;
+    @include flex-center;
+    font-size: 1.2rem;
+  }
+  
+  .label { font-size: 0.75rem; color: #888; font-weight: 700; margin: 0; }
+  .val { font-size: 1rem; font-weight: 800; color: $dark; margin: 0; }
+}
+
+// --- 5. FEATURES GRID ---
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 100px 0;
+  @media (max-width: 992px) { grid-template-columns: 1fr; }
+
+  .f-card {
+    background: $white;
+    padding: 50px 40px;
+    border-radius: 35px;
+    border: 1px solid rgba(0,0,0,0.03);
+    @include transition;
+    
+    &:hover {
+      transform: translateY(-15px);
+      box-shadow: $shadow-xl;
+    }
+
+    .f-icon-box {
+      width: 65px; height: 65px; border-radius: 20px;
+      font-size: 2rem; @include flex-center; margin-bottom: 30px;
+      &.gold { background: #FFF9E6; color: $accent; }
+      &.green { background: #E6F6F4; color: $s-color; }
+      &.blue { background: #E6F2FF; color: #007BFF; }
+    }
+    
+    h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: $dark; }
+    p { line-height: 1.7; color: #777; }
+  }
+}
+
+// --- 6. MEGA FOOTER ---
+.mega-footer {
+  background: $white;
+  padding: 100px 0 50px;
+  border-top: 1px solid #eee;
+  
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr;
+    gap: 80px;
+    padding-bottom: 80px;
+    @media (max-width: 992px) { grid-template-columns: 1fr; gap: 50px; }
+  }
+
+  .f-logo {
+    font-size: 2.2rem; font-weight: 900; text-decoration: none; color: $dark;
+    span { color: $p-color; }
+  }
+
+  .f-brand-block p { margin: 25px 0; font-size: 1.1rem; color: #777; line-height: 1.6; }
+  
+  .f-social {
+    display: flex; gap: 20px;
+    .s-link {
+      text-decoration: none; font-weight: 700; color: $dark;
+      font-size: 0.9rem; @include transition;
+      &:hover { color: $p-color; transform: skewX(-10deg); }
+    }
+  }
+
+  h5 { font-size: 1.3rem; font-weight: 800; margin-bottom: 30px; color: $dark; }
+
+  .f-link-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    .f-link-col {
+      display: flex; flex-direction: column; gap: 15px;
+      a { text-decoration: none; color: #777; font-weight: 500; @include transition; &:hover { color: $p-color; } }
+    }
+  }
+
+  .f-form {
+    display: flex; gap: 10px; margin-top: 20px;
+    input { background: #f5f5f5; border: none; padding: 15px 20px; border-radius: 12px; flex: 1; outline: none; }
+    button { background: $dark; color: $white; border: none; padding: 0 25px; border-radius: 12px; font-weight: 700; cursor: pointer; @include transition; &:hover { background: $p-color; } }
+  }
+}
+
+.footer-bottom {
+  border-top: 1px solid #eee; padding-top: 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: #aaa; font-weight: 500;
+  .step-tag { color: $dark; font-weight: 800; }
+  @media (max-width: 600px) { flex-direction: column; gap: 15px; }
+}
+
+// --- 7. ANIMATIONS ---
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25px); }
+}
+
+@keyframes reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}

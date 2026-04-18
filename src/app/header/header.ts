@@ -7,4 +7,17 @@ import { RouterLink, RouterModule } from "@angular/router";
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {}
+export class Header {
+
+
+
+onKeyDown(event: KeyboardEvent) {
+  if (event.ctrlKey && event.key === 'k') {
+    console.log('Ctrl + k pressed');
+  }
+}
+
+
+
+  
+}
