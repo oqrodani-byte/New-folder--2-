@@ -5,6 +5,9 @@ import { inject, Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class Api {
+  postObj(arg0: string, value: any) {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
 
  

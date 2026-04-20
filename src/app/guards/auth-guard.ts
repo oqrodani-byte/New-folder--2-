@@ -2,14 +2,15 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  let router = inject(Router)
+  const router = inject(Router);
+  const token = localStorage.getItem("token");
 
-  if(localStorage.getItem("token") == null){
-    alert("you need to sign first")
-    router.navigateByUrl("/login")
-      return false
+  // Проверяем: если токена нет, или он пустой
+  if (!token || token === 'undefined') {
+    alert("You need to sign in first!");
+    router.navigateByUrl("/login");
+    return false;
   }
-
   return true;
 };
 
