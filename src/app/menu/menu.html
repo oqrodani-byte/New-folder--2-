@@ -1,0 +1,68 @@
+<div class="menu-container">
+  <h1 class="menu-title">Our Menu</h1>
+
+  <div class="controls-luxury">
+    <div class="filter-box">
+      <input type="text" [(ngModel)]="searchQuery" (input)="applyFilters()" placeholder="Search dish...">
+      
+      <div class="price-inputs">
+        <input type="number" [(ngModel)]="minPrice" (input)="applyFilters()" placeholder="Min $">
+        <input type="number" [(ngModel)]="maxPrice" (input)="applyFilters()" placeholder="Max $">
+      </div>
+
+      <select [(ngModel)]="minRate" (change)="applyFilters()">
+        <option [value]="0">Any Rating</option>
+        <option [value]="3">3+ Stars</option>
+        <option [value]="4">4+ Stars</option>
+        <option [value]="5">5 Stars</option>
+      </select>
+    </div>
+
+    <div class="sort-box">
+      <button (click)="sort('price')">Expensive First</button>
+      <button (click)="sort('rate')">Best Rated</button>
+      <button class="reset" (click)="clear()">Reset</button>
+    </div>
+  </div>
+
+  <div class="product-grid">
+    @for (item of filteredArr; track item.id) {
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img [src]="item.image" [alt]="item.name">
+          @if (item.vegeterian) {
+            <span class="veg-badge">🌱 Veg</span>
+          }
+        </div>
+
+        <div class="card-body">
+          <div class="header-row">
+            <h3>{{ item.name }}</h3>
+            <span class="price">${{ item.price }}</span>
+          </div>
+
+          <p class="description">{{ item.description }}</p>
+
+          <div class="footer-row">
+            <div class="rating">
+              @for (star of [1,2,3,4,5]; track $index) {
+                <span [class.filled]="$index < item.rate">★</span>
+              }
+            </div>
+            
+            <div class="spiciness" *ngIf="item.spiciness > 0">
+              {{ '🌶️'.repeat(item.spiciness) }}
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="add-btn">Add to Order</button>
+            @if (item.canDelete) {
+              <button class="delete-btn" title="Remove Product">🗑️</button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

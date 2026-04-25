@@ -177,38 +177,7 @@ $shadow-xl: 0 30px 60px rgba(0,0,0,0.12);
   .val { font-size: 1rem; font-weight: 800; color: $dark; margin: 0; }
 }
 
-// --- 5. FEATURES GRID ---
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  padding: 100px 0;
-  @media (max-width: 992px) { grid-template-columns: 1fr; }
 
-  .f-card {
-    background: $white;
-    padding: 50px 40px;
-    border-radius: 35px;
-    border: 1px solid rgba(0,0,0,0.03);
-    @include transition;
-    
-    &:hover {
-      transform: translateY(-15px);
-      box-shadow: $shadow-xl;
-    }
-
-    .f-icon-box {
-      width: 65px; height: 65px; border-radius: 20px;
-      font-size: 2rem; @include flex-center; margin-bottom: 30px;
-      &.gold { background: #FFF9E6; color: $accent; }
-      &.green { background: #E6F6F4; color: $s-color; }
-      &.blue { background: #E6F2FF; color: #007BFF; }
-    }
-    
-    h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: $dark; }
-    p { line-height: 1.7; color: #777; }
-  }
-}
 
 
 
@@ -218,20 +187,20 @@ $white: #ffffff;
 
 .story-v2 {
   padding: 150px 0;
-  background-color: #050505; // Глубокий черный фон
+  background-color: #050505; 
   overflow: hidden;
 
   .story-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0; // Мы будем использовать позиционирование для наслоения
+    gap: 0; 
     position: relative;
   }
 }
 
 .story-img {
-  width: 60%; // Занимает чуть больше половины
+  width: 60%; 
   position: relative;
   z-index: 1;
 
@@ -244,7 +213,7 @@ $white: #ffffff;
     box-shadow: 50px 50px 100px rgba(0,0,0,0.5);
   }
 
-  // Золотая декоративная деталь на углу
+  
   &::after {
     content: '';
     position: absolute;
@@ -259,10 +228,10 @@ $white: #ffffff;
 
 .story-info {
   width: 50%; 
-  margin-left: -10%; // СМЕЩАЕМ ТЕКСТ НА КАРТИНКУ
-  background: rgba(18, 18, 18, 0.9); // Полупрозрачный темный фон
+  margin-left: -10%; 
+  background: rgba(18, 18, 18, 0.9); 
   padding: 60px;
-  backdrop-filter: blur(15px); // Эффект матового стекла
+  backdrop-filter: blur(15px); 
   border: 1px solid rgba(197, 160, 89, 0.3);
   z-index: 2;
   position: relative;
@@ -270,7 +239,7 @@ $white: #ffffff;
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem; // Большой, уверенный заголовок
+    font-size: 3.5rem; 
     color: $white;
     line-height: 1.1;
     margin-bottom: 25px;
@@ -297,7 +266,7 @@ $white: #ffffff;
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr; // Теперь точно в столбик, но аккуратно
+  grid-template-columns: 1fr; 
   gap: 15px;
   margin-bottom: 40px;
 
@@ -382,6 +351,10 @@ $white: #ffffff;
     button { background: $dark; color: $white; border: none; padding: 0 25px; border-radius: 12px; font-weight: 700; cursor: pointer; @include transition; &:hover { background: $p-color; } }
   }
 }
+
+
+
+
 
 .footer-bottom {
   border-top: 1px solid #eee; padding-top: 40px;

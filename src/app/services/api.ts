@@ -11,15 +11,24 @@ export class Api {
   private http = inject(HttpClient);
 
  
-  baseUrl = ''; 
+  baseUrl = 'https://restaurantapi.stepacademy.ge/api/'; 
+
+  headers = {
+      "X-API-KEY" : "1f22d8a0-8e2c-41e3-a026-ed8c48db07b0"
+  }
+
 
   
   getData(url: string) {
-    return this.http.get(this.baseUrl + url);
+    return this.http.get(this.baseUrl + url, {
+      headers : this.headers
+    });
   }
 
- 
+
   postData(url: string, body: any) {
-    return this.http.post(this.baseUrl + url, body);
+    return this.http.post(this.baseUrl + url, body,  {
+      headers : this.headers
+    });
   }
 }

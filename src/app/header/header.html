@@ -1,11 +1,36 @@
+<nav class="navbar-fixed">
+  <div class="nav-content">
+    
+    <div class="brand" routerLink="/home">
+      <div class="logo-box">
+        <span class="material-icons">restaurant</span>
+      </div>
+      <h1 class="brand-name">Foodie<span>.</span></h1>
+    </div>
 
+    <div class="search-container">
+      <span class="material-icons search-icon"></span>
+      <input 
+        type="text" 
+        placeholder="Search for your favorite dish..." 
+        (keydown)="onKeyDown($event)" />
+    </div>
 
-<nav class="navbar" >
-  <input (keydown)="onKeyDown($event)" />
-  <ul>
-    <li><a routerLink="/home"    routerLinkActive="active">Home</a></li>
-    <li><a routerLink="/details" routerLinkActive="active">Details</a></li>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a routerLink="/menu" routerLinkActive="active">Menu</a></li>
         <li><a routerLink="/login" routerLinkActive="active">Log In</a></li>
-    <!-- <li><a routerLink=""></a></li> -->
-  </ul>
+      </ul>
+
+      <div class="vertical-divider"></div>
+
+      <button class="cart-pill">
+        <span class="material-icons">shopping_bag</span>
+        <span class="cart-label">My Bag</span>
+        <span class="cart-count">0</span>
+      </button>
+    </div>
+
+  </div>
 </nav>

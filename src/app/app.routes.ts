@@ -25,11 +25,19 @@ export const routes: Routes = [
     loadComponent : () => import('./login/login').then(m => m.Login)
 
   },
+
+   {
+
+      path : "menu",
+    loadComponent : () => import('./menu/menu').then(m => m.Menu),
+     canActivate : [authGuard]
+  },
   {
     path : "**",
     loadComponent : () => import('./error/error').then(m => m.Error)
 
   }
+ 
 ];
 
 
