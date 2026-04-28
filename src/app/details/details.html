@@ -1,0 +1,59 @@
+@if (product) {
+  <div class="details-wrapper">
+    <button class="back-link" routerLink="/">← Back to Menu</button>
+
+    <div class="main-content">
+      <div class="image-box">
+        <img [src]="product.image" [alt]="product.name">
+        @if (product.vegetarian) {
+          <span class="badge-veg">🌱 Vegetarian</span>
+        }
+      </div>
+
+      <div class="info-box">
+        <div class="header">
+          <h1>{{ product.name }}</h1>
+          <span class="price">${{ product.price }}</span>
+        </div>
+
+        <div class="stats">
+          <div class="rating">
+            @for (star of [1,2,3,4,5]; track $index) {
+              <span [class.filled]="$index < product.rate">★</span>
+            }
+            <span class="rate-num">({{ product.rate }})</span>
+          </div>
+          
+          @if (product.spiciness > 0) {
+            <div class="spiciness">
+              {{ '🌶️'.repeat(product.spiciness) }}
+            </div>
+          }
+        </div>
+
+        <p class="description">{{ product.description }}</p>
+
+        <div class="section">
+          <h3>Ingredients</h3>
+          <ul class="ingredients-list">
+            @for (ing of product.ingredients; track ing) {
+              <li>{{ ing }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="section">
+          <h3>Preparation Method</h3>
+          <p class="method-text">{{ product.method }}</p>
+        </div>
+
+        <button class="add-to-cart">Add to Order</button>
+      </div>
+    </div>
+  </div>
+} @else if (isLoading) {
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Loading dish details...</p>
+  </div>
+}

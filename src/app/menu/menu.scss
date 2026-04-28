@@ -67,7 +67,6 @@
 
 .product-grid {
   display: grid;
-  // This creates a responsive grid: minimum 280px per card
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }

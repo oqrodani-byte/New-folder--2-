@@ -27,7 +27,7 @@
 
   <div class="product-grid">
     @for (item of filteredArr; track item.id) {
-      <div class="product-card">
+      <div class="product-card" [routerLink]="['/details', item.id]" style="cursor: pointer;">
         <div class="image-wrapper">
           <img [src]="item.image" [alt]="item.name">
           @if (item.vegeterian) {
@@ -56,9 +56,12 @@
           </div>
 
           <div class="actions">
-            <button class="add-btn">Add to Order</button>
+            <button class="add-btn" (click)="$event.stopPropagation()">Add to Order</button>
+            
             @if (item.canDelete) {
-              <button class="delete-btn" title="Remove Product">🗑️</button>
+              <button class="delete-btn" 
+                      title="Remove Product" 
+                      (click)="$event.stopPropagation()">🗑️</button>
             }
           </div>
         </div>

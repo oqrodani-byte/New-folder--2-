@@ -4,12 +4,12 @@ export class Product {
   id! :number;
   name! :string
   description! : string
-  vegeterian! : true
+  vegeterian! : boolean
   spiciness! : number
   rate! : number
   price! : number
   image! : string
-  canDelete! : true
+  canDelete! : boolean
 }
 
 
@@ -22,3 +22,6 @@ export class Product {
       // "price": 0,
       // "image": "string",
       // "canDelete": true
+
+
+      

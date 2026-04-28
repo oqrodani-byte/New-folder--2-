@@ -24,7 +24,7 @@
             <span class="loc-icon">📍</span>
             <input type="text" placeholder="Enter delivery address">
           </div>
-          <button class="search-submit">Check Menu</button>
+          <button class="search-submit"><li><a routerLink="/menu" routerLinkActive="active">Check Menu</a></li></button>
         </div>
         <div class="hero-stats">
           <div class="stat-item">
@@ -68,8 +68,38 @@
 
 
 
+<section class="favorites-section">
+  <h2 class="section-title">Chef's Favorites</h2>
+  
+  <div class="product-grid">
+    @for (item of favorites; track item.id) {
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img [src]="item.image" [alt]="item.name">
+          @if (item.vegeterian) {
+            <span class="veg-badge">🌱 Veg</span>
+          }
+        </div>
 
+        <div class="card-body">
+          <div class="header-row">
+            <h3>{{ item.name }}</h3>
+            <span class="price">${{ item.price }}</span>
+          </div>
 
+          <div class="footer-row">
+            <div class="rating">
+              @for (star of [1,2,3,4,5]; track $index) {
+                <span class="star" [class.filled]="$index < item.rate">★</span>
+              }
+            </div>
+            <span class="rate-number">({{ item.rate }})</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
   
 
 
@@ -86,7 +116,7 @@
           <li><span>✔</span> 24/7 Concierge support</li>
           <li><span>✔</span> Custom dietary plans</li>
         </ul>
-        <button class="btn-outline-gold">Discover Our Menu</button>
+        <button class="btn-outline-gold"><li><a routerLink="/menu" routerLinkActive="active">Discover Our Menu</a></li></button>
       </div>
     </div>
   </section>
@@ -107,7 +137,7 @@
         <div class="f-link-grid">
           <div class="f-link-col">
             <h5>Explore</h5>
-            <a href="#">Menu</a>
+            <a href="#">What is new?</a>
             <a href="#">Catering</a>
             <a href="#">Gift Cards</a>
             <a href="#">Reservations</a>

@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path : "details",
     loadComponent : () => import('./details/details').then(m => m.Details),
-    canActivate : [authGuard]
+    // canActivate : [authGuard]
 
   },
     {
@@ -30,7 +30,7 @@ export const routes: Routes = [
 
       path : "menu",
     loadComponent : () => import('./menu/menu').then(m => m.Menu),
-     canActivate : [authGuard]
+    //  canActivate : [authGuard]
   },
   {
     path : "**",

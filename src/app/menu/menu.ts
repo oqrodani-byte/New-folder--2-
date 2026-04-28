@@ -1,31 +1,31 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Api } from '../services/api';
-import { FormsModule } from '@angular/forms'; // ОБЯЗАТЕЛЬНО ДЛЯ ngModel
-import { CommonModule } from '@angular/common'; // ДЛЯ ПАЙПОВ И КЛАССОВ
+import { FormsModule } from '@angular/forms'; 
+import { CommonModule } from '@angular/common'; 
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [FormsModule, CommonModule], 
+  imports: [FormsModule, CommonModule,RouterLink], 
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
 })
 export class Menu implements OnInit {
   constructor(private api: Api, private cdr: ChangeDetectorRef) {}
 
-  productArr: any[] = [];      // Оригинал с сервера
-  filteredArr: any[] = [];     // То, что показываем
+  productArr: any[] = [];      
+  filteredArr: any[] = [];     
 
   // Поля фильтров
   searchQuery: string = '';
   minPrice: number = 0;
-  maxPrice: number = 200; // Поставь макс предел побольше
+  maxPrice: number = 200; 
   minRate: number = 0;
 
   ngOnInit() {
     this.api.getData('products').subscribe({
       next: (resp: any) => {
-        // Убедись, что путь правильный (resp.data.products)
         this.productArr = resp.data?.products || resp; 
         this.filteredArr = [...this.productArr];
         this.cdr.detectChanges();
@@ -34,7 +34,7 @@ export class Menu implements OnInit {
     });
   }
 
-  // Главная функция фильтрации
+
   applyFilters() {
     this.filteredArr = this.productArr.filter(item => {
       const s = this.searchQuery.toLowerCase();
@@ -45,7 +45,7 @@ export class Menu implements OnInit {
     });
   }
 
-  // Сортировка (по цене или рейтингу)
+ 
   sort(key: string) {
     this.filteredArr.sort((a, b) => b[key] - a[key]);
   }
