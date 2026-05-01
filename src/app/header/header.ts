@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { RouterLink, RouterModule } from "@angular/router";
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,20 @@ import { RouterLink, RouterModule } from "@angular/router";
 })
 export class Header {
 
-
+  constructor(private auth:Auth){
+    effect(() => {
+      this.isAuthorized.set(this.auth.authorized())
+    }
+  )
+    
+  }
+  isAuthorized = signal(false)
+  logout(){
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    this.auth.unauthorize()
+  }
+  
 
 onKeyDown(event: KeyboardEvent) {
   if (event.ctrlKey && event.key === 'k') {
@@ -19,5 +33,4 @@ onKeyDown(event: KeyboardEvent) {
 
 
 
-  
 }

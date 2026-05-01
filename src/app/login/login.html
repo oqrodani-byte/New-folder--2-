@@ -1,65 +1,24 @@
-<div class="login-page">
-  <div class="bg-image"></div>
-  <div class="overlay"></div>
-
-  <div class="login-wrapper">
-    <div class="restaurant-seal">
-      <span class="seal-inner">F</span>
+<div class="restaurant-auth-page">
+  <div class="glass-card">
+    <div class="brand-header">
+      <h2>Welcome back</h2>
+      <p>Please enter your details to feast</p>
     </div>
 
-    <form #myForm="ngForm" (ngSubmit)="login(myForm)" class="luxury-form">
-      <div class="form-header">
-        <h2 class="form-title">Private Access</h2>
-        <div class="gold-divider"></div>
-        <p class="form-subtitle">Exquisite Dining Experience</p>
+    <form #myForm="ngForm" (ngSubmit)="login(myForm.value)">
+      <div class="input-group">
+        <input type="email" placeholder="Email Address" ngModel name="email" required>
       </div>
-
-      <div class="input-container">
-        <div class="field-wrapper">
-          <label>Email Address</label>
-          <input 
-            #email="ngModel"
-            type="email" 
-            [(ngModel)]="loginUser.email" 
-            name="email" 
-            required 
-            placeholder="your@prestige.com"
-            class="premium-input"
-          />
-          @if(email.invalid && email.touched){
-            <span class="error-text">Identity unverified</span>
-          }
-        </div>
-
-        <div class="field-wrapper">
-          <label>Security Key</label>
-          <input
-            #password="ngModel"
-            type="password"
-            [(ngModel)]="loginUser.password"
-            name="password"
-            required
-            minlength="6"
-            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@.]{6,}$"
-            placeholder="••••••••"
-            class="premium-input"
-          />
-          @if(password.invalid && password.touched && password.dirty ){
-            <div class="error-container">
-              <span class="error-text">Pattern requirements not met</span>
-            </div>
-          }
-        </div>
-      </div>
-
-      <button [disabled]="myForm.invalid" class="submit-btn">
-        <span class="btn-text">SIGN IN</span>
-        <div class="btn-shine"></div>
-      </button>
       
-      <div class="form-footer">
-        <span>EST. 2026 — PREMIUM SERVICE</span>
+      <div class="input-group">
+        <input type="password" placeholder="Password" ngModel name="password" required>
       </div>
+
+      <button type="submit" class="btn-order">Log In</button>
     </form>
+
+    <a routerLink="/register" class="register-link">
+      Join our community — <span>Register</span>
+    </a>
   </div>
 </div>

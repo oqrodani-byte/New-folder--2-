@@ -1,49 +1,36 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { Api } from '../services/api';
-import { LoginUser } from '../models/user';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router'; 
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule],
+  imports: [RouterModule,FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-
-  constructor(
-    private api: Api, 
-    private http: HttpClient, 
-    private router: Router 
-  ) {}
-
-  loginUser: LoginUser = {
-    email: "stepacc210@gmail.com",
-    password: "Stepacc210@gmail.com"
-  }
-
-  login(form: any) {
-    console.log(form.value);
-
+  constructor(private api:Api, private cdr:ChangeDetectorRef, private router:Router
+    ,private auth:Auth
+  ){
     
-    this.http.post("auth/login", form.value)
-      .subscribe((resp: any) => {
-        if (resp.data?.accessToken) {
-          
-          localStorage.setItem("token", resp.data.accessToken); 
-          
-          console.log("Токен получен и сохранен!");
-
-          
-          this.router.navigateByUrl("/details"); 
-        } else {
-          console.log("Токен не найден в ответе сервера");
-        }
-      }, (err) => {
-        console.error("Ошибка при входе:", err);
-      });
+  }
+  
+  login(data:any){
+    this.api.login(data).subscribe({
+      next: (res: any) => {
+        alert('user logged in succesfully')
+        this.router.navigate(['/home']) 
+        localStorage.setItem('refreshToken',res.data.refreshToken)
+        localStorage.setItem('accessToken',res.data.accessToken)
+        this.auth.authorize()
+        this.cdr.detectChanges()
+        
+      },
+      error: error => {
+        alert(error.message)
+      }
+    })  
   }
 }

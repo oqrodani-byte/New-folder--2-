@@ -1,0 +1,53 @@
+<div class="restaurant-bg">
+  <div class="form-container">
+    <!-- Декоративные элементы -->
+    <div class="ornament top-left"></div>
+    <div class="ornament bottom-right"></div>
+    
+    <header class="form-header">
+      <h2>Join the Club</h2>
+      <p>Reserve your seat at the table of the future</p>
+    </header>
+
+    <form #myForm="ngForm" (ngSubmit)="register(myForm.value)" class="registration-form">
+      <div class="input-group">
+        <input type="text" ngModel name="firstName" required placeholder=" ">
+        <label>First Name</label>
+        <span class="border-detail"></span>
+      </div>
+
+      <div class="input-group">
+        <input type="text" ngModel name="lastName" required placeholder=" ">
+        <label>Last Name</label>
+        <span class="border-detail"></span>
+      </div>
+
+      <div class="input-group">
+        <input type="email" ngModel name="email" required placeholder=" ">
+        <label>Email Address</label>
+        <span class="border-detail"></span>
+      </div>
+
+      <div class="input-group">
+        <input type="password" ngModel name="password" required placeholder=" ">
+        <label>Password</label>
+        <span class="border-detail"></span>
+      </div>
+
+      <button class="btn-submit">
+        <span>Become a Member</span>
+        <div class="btn-flare"></div>
+      </button>
+    </form>
+
+    @if(showInput){
+    <div class="verification-zone">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="code" placeholder=" ">
+        <label>Verification Code</label>
+      </div>
+      <button (click)="verify()" class="btn-verify">Verify Identity</button>
+    </div>
+    }
+  </div>
+</div>

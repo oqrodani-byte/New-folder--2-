@@ -1,8 +1,8 @@
 @if (product) {
   <div class="details-wrapper">
-    <button class="back-link" routerLink="/">← Back to Menu</button>
+    <button class="back-link" routerLink="/menu">← Back to Menu</button>              
 
-    <div class="main-content">
+    <div class="main-content">                                               
       <div class="image-box">
         <img [src]="product.image" [alt]="product.name">
         @if (product.vegetarian) {
@@ -47,7 +47,7 @@
           <p class="method-text">{{ product.method }}</p>
         </div>
 
-        <button class="add-to-cart">Add to Order</button>
+        <button class="add-to-cart" >Add to Order</button>
       </div>
     </div>
   </div>

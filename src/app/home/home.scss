@@ -1,4 +1,4 @@
-// --- 1. CORE VARIABLES & MIXINS ---
+
 $p-color: #FF5A5F;
 $s-color: #00A699;
 $accent: #FFB400;
@@ -8,8 +8,8 @@ $light-bg: #FDFDFD;
 $white: #FFFFFF;
 $cubic: cubic-bezier(0.23, 1, 0.32, 1);
 $shadow-xl: 0 30px 60px rgba(0,0,0,0.12);
-// Light Luxury Theme Variables
-$primary-gold: #c5a02d; // Slightly deeper gold for better visibility on white
+
+$primary-gold: #c5a02d; 
 $pure-white: #ffffff;
 $off-white: #fafafa;
 $text-main: #222222;
@@ -29,7 +29,7 @@ $shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.15);
   transition: $prop 0.4s $cubic;
 }
 
-// --- 2. GLOBAL STYLES ---
+
 .app-container {
   background: $light-bg;
   color: $text;
@@ -44,7 +44,7 @@ $shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.15);
   padding: 0 30px;
 }
 
-// Mesh Background
+
 .mesh-gradient {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100vh;
@@ -54,11 +54,7 @@ $shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.15);
   z-index: 0;
 }
 
-// --- 3. NAVIGATION ---
 
-
-
-// --- 4. HERO SECTION ---
 .hero-v2 {
   padding: 80px 0;
   position: relative;
@@ -105,7 +101,7 @@ $shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.15);
   }
 }
 
-// Hero Search Form
+
 .hero-form {
   display: flex;
   background: $white;

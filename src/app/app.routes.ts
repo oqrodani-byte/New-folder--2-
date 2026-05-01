@@ -32,12 +32,19 @@ export const routes: Routes = [
     loadComponent : () => import('./menu/menu').then(m => m.Menu),
     //  canActivate : [authGuard]
   },
+
+
+     {path:'register',
+    loadComponent:() => import('./register/register').then(m => m.Register)
+
+  },
+
   {
     path : "**",
     loadComponent : () => import('./error/error').then(m => m.Error)
 
   }
- 
+
 ];
 
 

@@ -17,7 +17,7 @@ export class Menu implements OnInit {
   productArr: any[] = [];      
   filteredArr: any[] = [];     
 
-  // Поля фильтров
+ 
   searchQuery: string = '';
   minPrice: number = 0;
   maxPrice: number = 200; 

@@ -2,40 +2,49 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Api } from '../services/api';
 import { CommonModule } from '@angular/common';
+import { Product } from '../models/product';
+import { RouterLink } from "@angular/router";
+
 
 @Component({
   selector: 'app-details',
-  standalone: true, // Убедись, что компонент Standalone, если используешь последние версии Angular
+  standalone: true, 
   imports: [CommonModule],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
 export class Details implements OnInit {
-  // Используем inject для чистоты кода
+
   private route = inject(ActivatedRoute);
   private api = inject(Api);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(ActivatedRoute)
 
-  product: any = null; // Сюда прилетят данные из API
+
+
+  product: any = null; 
   isLoading: boolean = true;
-
+  selectedId = 0
   ngOnInit() {
-    // 1. Вытаскиваем ID из ссылки (например, /details/2)
-    const id = this.route.snapshot.paramMap.get('id');
 
-    if (id) {
-      // 2. Делаем запрос через твой сервис
-      this.api.getData('products/' + id).subscribe({
+    
+     this.router.queryParams.subscribe(data =>{
+        this.selectedId = data['id']
+    })
+
+    if (this.selectedId) {
+     
+      this.api.getData('products/' + this.selectedId).subscribe({
         next: (resp: any) => {
-          // В твоем API данные лежат в поле data
+          
           this.product = resp.data;
           this.isLoading = false;
           
-          // Принудительно обновляем UI, так как ты используешь ChangeDetectorRef в меню
+    
           this.cdr.detectChanges(); 
         },
         error: (err) => {
-          console.error('Ошибка загрузки блюда:', err);
+          console.error('error', err);
           this.isLoading = false;
         }
       });

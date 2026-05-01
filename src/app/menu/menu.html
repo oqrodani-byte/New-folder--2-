@@ -27,7 +27,7 @@
 
   <div class="product-grid">
     @for (item of filteredArr; track item.id) {
-      <div class="product-card" [routerLink]="['/details', item.id]" style="cursor: pointer;">
+      <div class="product-card" routerLink="/details" [queryParams]="{id : item.id}" style="cursor: pointer;">
         <div class="image-wrapper">
           <img [src]="item.image" [alt]="item.name">
           @if (item.vegeterian) {

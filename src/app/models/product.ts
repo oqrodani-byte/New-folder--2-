@@ -10,6 +10,9 @@ export class Product {
   price! : number
   image! : string
   canDelete! : boolean
+    ingredients! : [
+    string
+  ]
 }
 
 
