@@ -1,6 +1,7 @@
 <div class="menu-container">
   <h1 class="menu-title">Our Menu</h1>
 
+  <!-- Фильтры и поиск -->
   <div class="controls-luxury">
     <div class="filter-box">
       <input type="text" [(ngModel)]="searchQuery" (input)="applyFilters()" placeholder="Search dish...">
@@ -14,8 +15,12 @@
         <option [value]="0">Any Rating</option>
         <option [value]="3">3+ Stars</option>
         <option [value]="4">4+ Stars</option>
-        <option [value]="5">5 Stars</option>
       </select>
+
+      <div class="spice-range-container" style="display: flex; flex-direction: column; min-width: 150px; color: white;">
+        <label style="font-size: 12px; margin-bottom: 4px;">Min Heat: {{ minSpice }} 🌶️</label>
+        <input type="range" min="0" max="5" step="1" [(ngModel)]="minSpice" (input)="applyFilters()">
+      </div>
     </div>
 
     <div class="sort-box">
@@ -25,14 +30,12 @@
     </div>
   </div>
 
+  <!-- Список блюд -->
   <div class="product-grid">
     @for (item of filteredArr; track item.id) {
-      <div class="product-card" routerLink="/details" [queryParams]="{id : item.id}" style="cursor: pointer;">
+      <div class="product-card" [routerLink]="['/details']" [queryParams]="{id : item.id}">
         <div class="image-wrapper">
           <img [src]="item.image" [alt]="item.name">
-          @if (item.vegeterian) {
-            <span class="veg-badge">🌱 Veg</span>
-          }
         </div>
 
         <div class="card-body">
@@ -40,8 +43,6 @@
             <h3>{{ item.name }}</h3>
             <span class="price">${{ item.price }}</span>
           </div>
-
-          <p class="description">{{ item.description }}</p>
 
           <div class="footer-row">
             <div class="rating">
@@ -53,18 +54,24 @@
             <div class="spiciness" *ngIf="item.spiciness > 0">
               {{ '🌶️'.repeat(item.spiciness) }}
             </div>
+            <div class="no-spice" *ngIf="item.spiciness === 0" style="font-size: 12px; opacity: 0.6;">
+              Not Spicy
+            </div>
           </div>
 
+          <!-- Секция с кнопкой -->
           <div class="actions">
-            <button class="add-btn" (click)="$event.stopPropagation()">Add to Order</button>
-            
-            @if (item.canDelete) {
-              <button class="delete-btn" 
-                      title="Remove Product" 
-                      (click)="$event.stopPropagation()">🗑️</button>
-            }
+            <button 
+              class="add-btn" 
+              (click)="addToOrder(item); $event.stopPropagation()">
+              Add to Order
+            </button>
           </div>
         </div>
+      </div>
+    } @empty {
+      <div style="text-align: center; width: 100%; color: gray; padding: 50px;">
+        No dishes found with heat level {{ minSpice }} or higher.
       </div>
     }
   </div>

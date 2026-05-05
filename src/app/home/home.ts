@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Api } from '../services/api';
 import { Product } from '../models/product';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-home',

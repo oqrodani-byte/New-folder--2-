@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Api } from '../services/api';
 import { CommonModule } from '@angular/common';
 import { Product } from '../models/product';
-import { RouterLink } from "@angular/router";
-
+import { RouterLink, RouterModule } from "@angular/router";
 
 @Component({
   selector: 'app-details',

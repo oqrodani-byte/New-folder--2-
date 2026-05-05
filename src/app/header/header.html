@@ -8,14 +8,7 @@
       <h1 class="brand-name">Foodie<span>.</span></h1>
     </div>
 
-    <div class="search-container">
-      <span class="material-icons search-icon"></span>
-      <input 
-        type="text" 
-        placeholder="Search for your favorite dish..." 
-        (keydown)="onKeyDown($event)" />
-    </div>
-
+  
     <div class="nav-actions">
       <ul class="nav-links">
         <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
@@ -26,7 +19,7 @@
       <div class="vertical-divider"></div>
 
       <button class="cart-pill">
-        <span class="cart-label">My Bag</span>
+        <span class="cart-label" routerLink="/cart" routerLinkActive="active">My Bag</span>
         <span class="cart-count">0</span>
       </button>
     </div>
