@@ -1,18 +1,17 @@
 
 
 export class Product {
-  id! :number;
-  name! :string
-  description! : string
-  vegeterian! : boolean
-  spiciness! : number
-  rate! : number
-  price! : number
-  image! : string
-  canDelete! : boolean
-    ingredients! : [
-    string
-  ]
+  id! : number;
+  name! : string;
+  description! : string;
+  vegetarian! : boolean; 
+  spiciness! : number;
+  rate! : number;
+  price! : number;
+  image! : string;
+  canDelete! : boolean;
+  categoryId! : number; 
+  ingredients! : string[];
 }
 
 

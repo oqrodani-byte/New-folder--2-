@@ -3,8 +3,6 @@ import { Api } from '../services/api';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common'; 
 import { RouterLink, Router } from '@angular/router'; 
-
-
 import { CartService } from '../services/cartt';
 import { Product } from '../models/product';
 
@@ -16,6 +14,16 @@ import { Product } from '../models/product';
   styleUrl: './menu.scss',
 })
 export class Menu implements OnInit {
+  productArr: any[] = [];      
+  filteredArr: any[] = []; 
+  categories: any[] = []; 
+  searchQuery: string = '';
+  minPrice: number = 0;
+  maxPrice: number = 1000; 
+  minRate: number = 0;
+  minSpice: number = 0; 
+  selectedCategoryId: number | null = null; 
+
   constructor(
     private api: Api, 
     private cdr: ChangeDetectorRef,
@@ -23,31 +31,53 @@ export class Menu implements OnInit {
     private router: Router
   ) {}
 
-  productArr: any[] = [];      
-  filteredArr: any[] = [];     
+  private getItemCategoryId(item: any): number | null {
+    if (item.categoryId !== undefined && item.categoryId !== null) {
+      return Number(item.categoryId);
+    }
 
-  searchQuery: string = '';
-  minPrice: number = 0;
-  maxPrice: number = 500; 
-  minRate: number = 0;
-  minSpice: number = 0; 
+    if (item.category?.id !== undefined && item.category?.id !== null) {
+      return Number(item.category.id);
+    }
+
+    return null;
+  }
 
   ngOnInit() {
+   
+    this.api.getCategories().subscribe((resp: any) => {
+      this.categories = resp.data;
+    });
+
+   
+    const adminItems = this.cartService.getCustomProducts() || [];
+    this.productArr = [...adminItems];
+    this.filteredArr = [...this.productArr];
+    
+    
     this.loadAllPages(1);
   }
 
-  
-  addToOrder(item: Product) {
-    this.cartService.addToCart(item); 
-    this.router.navigateByUrl('/cart'); 
+  setCategory(id: any) {
+    this.selectedCategoryId = id === null ? null : Number(id);
+    this.productArr = [...(this.cartService.getCustomProducts() || [])];
+    this.filteredArr = [...this.productArr];
+    this.loadAllPages(1, this.selectedCategoryId);
   }
 
-  loadAllPages(page: number) {
-    this.api.getData(`products?page=${page}&perPage=10`).subscribe({
+  loadAllPages(page: number, categoryId: number | null = null) {
+    const query = [`page=${page}`, `perPage=12`];
+    if (categoryId !== null) {
+      query.push(`categoryId=${categoryId}`);
+    }
+
+    this.api.getData(`products?${query.join('&')}`).subscribe({
       next: (resp: any) => {
-        const newItems = resp.data?.products || [];
+        const newItems = resp.data?.products || resp.data || [];
+        
+        
         this.productArr = [...this.productArr, ...newItems];
-        this.filteredArr = [...this.productArr];
+        this.applyFilters();
 
         if (resp.data?.hasMore) {
           this.loadAllPages(page + 1);
@@ -55,22 +85,25 @@ export class Menu implements OnInit {
           this.cdr.detectChanges();
         }
       },
-      error: (er) => {
-        console.error("Fetch error:", er);
-      }
+      error: (er) => console.error("err", er)
     });
   }
 
   applyFilters() {
     this.filteredArr = this.productArr.filter(item => {
-      const s = this.searchQuery.toLowerCase();
-      const matchesSearch = item.name.toLowerCase().includes(s);
+      
+      const itemCatId = this.getItemCategoryId(item);
+      const matchesCategory = this.selectedCategoryId === null || itemCatId === this.selectedCategoryId;
+
+     
+      const matchesSearch = item.name?.toLowerCase().includes(this.searchQuery.toLowerCase());
       const matchesPrice = item.price >= this.minPrice && item.price <= this.maxPrice;
-      const matchesRate = item.rate >= this.minRate;
-      const spiceLevel = item.spiciness ?? 0;
-      const matchesSpice = spiceLevel >= this.minSpice;
-      return matchesSearch && matchesPrice && matchesRate && matchesSpice;
+      const matchesRate = (item.rate || 0) >= this.minRate;
+      const matchesSpice = (item.spiciness || 0) >= this.minSpice;
+
+      return matchesCategory && matchesSearch && matchesPrice && matchesRate && matchesSpice;
     });
+    this.cdr.detectChanges();
   }
 
   sort(key: string) {
@@ -80,9 +113,17 @@ export class Menu implements OnInit {
   clear() {
     this.searchQuery = '';
     this.minPrice = 0;
-    this.maxPrice = 500;
+    this.maxPrice = 1000;
     this.minRate = 0;
     this.minSpice = 0; 
+    this.selectedCategoryId = null;
+    this.productArr = [...(this.cartService.getCustomProducts() || [])];
     this.filteredArr = [...this.productArr];
+    this.loadAllPages(1);
+  }
+
+  addToOrder(item: Product) {
+    this.cartService.addToCart(item); 
+    this.router.navigateByUrl('/cart'); 
   }
 }

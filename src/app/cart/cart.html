@@ -1,62 +1,96 @@
 <div class="menu-container">
-  <h1 class="menu-title">Your Selection</h1>
+ 
+  <ng-container *ngIf="checkoutState !== 'success'">
+    <h1 class="menu-title">Your Selection</h1>
+
+    
+    <div class="controls-luxury" *ngIf="myItems.length > 0">
+      <div class="sort-box">
+        <span class="label">Sort items:</span>
+        <button (click)="sort('price')">Highest Price</button>
+        <button (click)="sort('rate')">Top Rated</button>
+        <button class="reset" routerLink="/menu">Add More Food</button>
+      </div>
+    </div>
+
+    
+    <div class="product-grid">
+      @for (item of myItems; track $index) {
+        <div class="product-card">
+         
+          <div class="image-wrapper">
+            <img [src]="item.image" [alt]="item.name">
+          </div>
+
+          <div class="card-body">
+            <div class="header-row">
+              <h3>{{ item.name }}</h3>
+              <span class="price">${{ item.price * (item.quantity || 1) }}</span>
+            </div>
+
+            <div class="footer-row">
+              <div class="rating">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <span [class.filled]="star <= item.rate">★</span>
+                }
+              </div>
+              <div class="spiciness" *ngIf="item.spiciness > 0">
+                {{ '🌶️'.repeat(item.spiciness) }}
+              </div>
+            </div>
+
+           
+            <div class="actions">
+              <div class="quantity-controls">
+                <button class="qty-btn" (click)="decreaseQty(item, $index)">-</button>
+                <span class="qty-number">{{ item.quantity || 1 }}</span>
+                <button class="qty-btn" (click)="increaseQty(item)">+</button>
+              </div>
+
+              <button class="delete-btn" (click)="removeItem($index)">
+                Remove Item
+              </button>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state" *ngIf="checkoutState === 'cart'">
+          <h2>Your cart is empty</h2>
+          <p>Looks like you haven't added any dishes yet.</p>
+          <button class="add-btn" routerLink="/menu">Return to Menu</button>
+        </div>
+      }
+    </div>
+
+    
+    <div class="controls-luxury total-section" *ngIf="myItems.length > 0 && checkoutState === 'cart'">
+      <div class="total-info">
+        <span>Total Amount:</span>
+        <span class="total-price">${{ getTotalPrice() }}</span>
+      </div>
+      <button class="add-btn checkout" (click)="openConfirm()">Confirm Order</button>
+    </div>
+  </ng-container>
 
   
-  <div class="controls-luxury" *ngIf="myItems.length > 0">
-    <div class="sort-box">
-      <span class="label">Sort items:</span>
-      <button (click)="sort('price')">Highest Price</button>
-      <button (click)="sort('rate')">Top Rated</button>
-      <button class="reset" routerLink="/menu">Add More Food</button>
+  <div class="fullscreen-overlay" *ngIf="checkoutState === 'confirm'">
+    <div class="modal-card">
+      <h2>Are you sure?</h2>
+      <p>Confirm order for <strong>${{ getTotalPrice() }}</strong>?</p>
+      <div class="modal-btns">
+        <button class="cancel-btn" (click)="cancelCheckout()">Go Back</button>
+        <button class="success-btn" (click)="processOrder()">Yes, Order!</button>
+      </div>
     </div>
   </div>
 
-  <div class="product-grid">
-    @for (item of myItems; track $index) {
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img [src]="item.image" [alt]="item.name">
-        </div>
-
-        <div class="card-body">
-          <div class="header-row">
-            <h3>{{ item.name }}</h3>
-            <span class="price">${{ item.price }}</span>
-          </div>
-
-          <div class="footer-row">
-            <div class="rating">
-              @for (star of [1,2,3,4,5]; track star) {
-                <span [class.filled]="star <= item.rate">★</span>
-              }
-            </div>
-            <div class="spiciness" *ngIf="item.spiciness > 0">
-              {{ '🌶️'.repeat(item.spiciness) }}
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="delete-btn" (click)="removeItem($index)">
-              Remove Item
-            </button>
-          </div>
-        </div>
-      </div>
-    } @empty {
-      <div class="empty-state">
-        <h2>Your cart is empty</h2>
-        <p>Looks like you haven't added any dishes yet.</p>
-        <button class="add-btn" routerLink="/menu">Return to Menu</button>
-      </div>
-    }
-  </div>
-
-  
-  <div class="controls-luxury total-section" *ngIf="myItems.length > 0">
-    <div class="total-info">
-      <span>Total Amount:</span>
-      <span class="total-price">${{ getTotalPrice() }}</span>
+ 
+  <div class="fullscreen-overlay success-theme" *ngIf="checkoutState === 'success'">
+    <div class="modal-card">
+      <div class="icon">✅</div>
+      <h2>Order Successful!</h2>
+      <p>Your meal is being prepared.</p>
+      <button class="success-btn" routerLink="/menu">Return to Menu</button>
     </div>
-    <button class="add-btn checkout">Confirm Order</button>
   </div>
 </div>

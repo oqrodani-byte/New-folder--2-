@@ -8,25 +8,27 @@
       <h1 class="brand-name">Foodie<span>.</span></h1>
     </div>
 
-  
     <div class="nav-actions">
       <ul class="nav-links">
         <li><a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
         <li><a routerLink="/menu" routerLinkActive="active">Menu</a></li>
-        <li><a routerLink="/login" routerLinkActive="active">Log In</a></li>
+        
+        
+        @if (auth.authorized()) {
+          <li><a routerLink="/admin" routerLinkActive="active">Admin</a></li>
+          <li><a (click)="logout()" class="logout-link">Log Out</a></li>
+        } @else {
+          <li><a routerLink="/login" routerLinkActive="active">Log In</a></li>
+        }
       </ul>
 
       <div class="vertical-divider"></div>
 
-      <button class="cart-pill">
-        <span class="cart-label" routerLink="/cart" routerLinkActive="active">My Bag</span>
+      <button class="cart-pill" routerLink="/cart">
+        <span class="cart-label">My Bag</span>
         <span class="cart-count">0</span>
       </button>
     </div>
 
   </div>
 </nav>
-
-
-
-

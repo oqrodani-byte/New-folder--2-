@@ -120,3 +120,39 @@ $glass: rgba(255, 255, 255, 0.9);
 }
 
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 20px;
+
+  li a {
+    text-decoration: none;
+    color: #333; 
+    font-weight: 500;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &.active {
+      color: #c5a059; 
+    }
+
+    &:hover {
+      color: #c5a059;
+    }
+  }
+
+
+  .logout-link {
+    color: #888; 
+    &:hover {
+      color: #e74c3c !important; 
+    }
+  }
+}
+
+
+.cart-pill {
+  cursor: pointer;
+ 
+}

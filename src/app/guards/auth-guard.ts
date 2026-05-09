@@ -3,18 +3,19 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const token = localStorage.getItem("token");
+  
+  
+  const token = localStorage.getItem("accessToken");
 
-  // Проверяем: если токена нет, или он пустой
-  if (!token || token === 'undefined') {
-    alert("You need to sign in first!");
-    router.navigateByUrl("/login");
+  
+  if (!token || token === 'undefined' || token === '') {
+    console.warn('Access denied: No token found'); 
+    
+    
+    router.navigate(['/login']);
+    
     return false;
   }
+
   return true;
 };
-
-
-
-
-

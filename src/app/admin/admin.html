@@ -1,0 +1,40 @@
+<div class="admin-container">
+  <div class="admin-card">
+    <div class="admin-header">
+      <h1 class="admin-title">Chef's Dashboard</h1>
+      <p class="admin-subtitle">Add a new masterpiece to your menu</p>
+    </div>
+
+    <div class="form-body">
+     
+      <div class="input-group">
+        <label>Dish Name</label>
+        <input type="text" [(ngModel)]="name" placeholder="e.g. Royal Steak">
+      </div>
+
+      
+      <div class="row">
+        <div class="input-group">
+          <label>Price ($)</label>
+          <input type="number" [(ngModel)]="price" placeholder="0.00">
+        </div>
+        <div class="input-group">
+          <label>Spiciness: {{ spiciness }} 🌶️</label>
+          <input type="range" min="0" max="5" [(ngModel)]="spiciness" class="range-input">
+        </div>
+      </div>
+
+      
+      <div class="input-group">
+        <label>Image URL</label>
+        <input type="text" [(ngModel)]="image" placeholder="https://images.unsplash.com/...">
+      </div>
+
+      
+      <div class="actions">
+        <button class="save-btn" (click)='saveProduct()'>Publish Dish</button>
+        <button class="back-btn" routerLink="/menu">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
