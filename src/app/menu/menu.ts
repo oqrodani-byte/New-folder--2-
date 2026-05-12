@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router'; 
 import { CartService } from '../services/cartt';
 import { Product } from '../models/product';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-menu',
@@ -126,4 +127,5 @@ export class Menu implements OnInit {
     this.cartService.addToCart(item); 
     this.router.navigateByUrl('/cart'); 
   }
+  
 }

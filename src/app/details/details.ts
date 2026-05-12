@@ -1,52 +1,57 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'; 
 import { Api } from '../services/api';
 import { CommonModule } from '@angular/common';
-import { Product } from '../models/product';
-import { RouterLink, RouterModule } from "@angular/router";
+import { CartService } from '../services/cartt';
 
 @Component({
   selector: 'app-details',
   standalone: true, 
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink], 
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
 export class Details implements OnInit {
-
+  
   private route = inject(ActivatedRoute);
   private api = inject(Api);
   private cdr = inject(ChangeDetectorRef);
-  private router = inject(ActivatedRoute)
-
-
+  private cartService = inject(CartService); 
+  private router = inject(Router); 
 
   product: any = null; 
   isLoading: boolean = true;
-  selectedId = 0
+  selectedId = 0;
+
   ngOnInit() {
-
     
-     this.router.queryParams.subscribe(data =>{
-        this.selectedId = data['id']
-    })
+    this.route.queryParams.subscribe(data => {
+      this.selectedId = data['id'];
+      if (this.selectedId) {
+        this.loadProduct();
+      }
+    });
+  }
 
-    if (this.selectedId) {
-     
-      this.api.getData('products/' + this.selectedId).subscribe({
-        next: (resp: any) => {
-          
-          this.product = resp.data;
-          this.isLoading = false;
-          
-    
-          this.cdr.detectChanges(); 
-        },
-        error: (err) => {
-          console.error('error', err);
-          this.isLoading = false;
-        }
-      });
+  loadProduct() {
+    this.api.getData('products/' + this.selectedId).subscribe({
+      next: (resp: any) => {
+        this.product = resp.data;
+        this.isLoading = false;
+        this.cdr.detectChanges(); 
+      },
+      error: (err) => {
+        console.error('Ошибка загрузки товара:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  
+  addToOrder() {
+    if (this.product) {
+      this.cartService.addToCart(this.product);
+      this.router.navigateByUrl('/cart');
     }
   }
 }

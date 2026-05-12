@@ -10,4 +10,5 @@ export class RegisterUser {
  lastName! : string
  email! : string
  password! : string
+ signUpDate! : Date
 }
